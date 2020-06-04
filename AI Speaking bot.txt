@@ -1,0 +1,122 @@
+using System.Speech.Recognition;
+using System.Speech.Synthesis;
+using System.Configuration;
+using System.Data.SqlClient;
+
+namespace Personal_Asistant
+{
+
+    public partial class Form1 : Form
+    {
+        SpeechRecognitionEngine speechRecognitionEngine = null;
+        SpeechSynthesizer jarwis=new SpeechSynthesizer();
+        public Form1()
+        {
+            InitializeComponent();
+            try
+            {
+                //Set the language for a speech engine
+                speechRecognitionEngine = setLaguage("en-US");
+                //Create event handler for recognize text
+                speechRecognitionEngine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Mainevent_SpeechRecognized);
+                LoadGrammerAndCommnds();
+                speechRecognitionEngine.SetInputToDefaultAudioDevice();
+                speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+            }
+            catch(Exception er)
+            {
+                MessageBox.Show(er.Message);
+            }
+            //Set the language for a speech engine
+            speechRecognitionEngine = setLaguage("en-US");
+            //Create event handler for recognize text
+            speechRecognitionEngine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Mainevent_SpeechRecognized);
+            LoadGrammerAndCommnds();
+            speechRecognitionEngine.SetInputToDefaultAudioDevice();
+            speechRecognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+        }
+
+        private void LoadGrammerAndCommnds() 
+        {
+            try
+            {
+                string connectionstring = ConfigurationManager.ConnectionStrings["MyDatabase"].ConnectionString;
+                SqlConnection con = new SqlConnection(connectionstring);
+                con.Open();
+                SqlCommand cm = new SqlCommand();
+                cm.Connection = con;
+                cm.CommandText = "select * from DefaultTable";
+                SqlDataReader dr = cm.ExecuteReader();
+                while(dr.Read())
+                {
+                    var Loadcmd = dr["DefaultCommands"].ToString();
+                    Grammar commandgrammer =new Grammar(new GrammarBuilder(new Choices(Loadcmd)));
+                    speechRecognitionEngine.LoadGrammarAsync(commandgrammer);
+                }
+                dr.Close();
+                con.Close();
+
+            }catch(Exception er)
+            {
+                jarwis.SpeakAsync("I have detect an invalid entry in your web command. Fix this error."+er.Message);
+            }
+        }
+
+        private void Mainevent_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            string Name = Environment.UserName;
+            string speech = e.Result.Text;
+            switch(speech)
+            {
+                case "hello":
+                    jarwis.SpeakAsync("hello "+Name);
+                    System.DateTime timenow = System.DateTime.Now;
+                    if(timenow.Hour>=5 && timenow.Hour<12)
+                    {
+                        jarwis.SpeakAsync("Good Morning" + Name);
+                    }
+                    if(timenow.Hour>=12 && timenow.Hour<18)
+                    {
+                        jarwis.SpeakAsync("Good Afternoon " + Name);
+                    }
+                    if(timenow.Hour>=18 && timenow.Hour<24)
+                    {
+                        jarwis.SpeakAsync("Good Evening" + Name);
+                    }
+                    if(timenow.Hour<5)
+                    {
+                        jarwis.SpeakAsync("Hello " + Name + ",you are still awake you should go to sleep");
+                    }
+                    break;
+                case "What time is it":
+                    System.DateTime now = System.DateTime.Now;
+                    string time = now.GetDateTimeFormats('t')[0];
+                    jarwis.SpeakAsync(time);
+                    break;
+                case "Who are you":
+                    jarwis.SpeakAsync("I am your personal assistant");
+                    jarwis.SpeakAsync("I read email,whether report,i can search web for you and anything can do as your personal assistant.");
+                    break;
+                case "What is your name":
+                    jarwis.SpeakAsync("I am jarvis");
+                    break;
+            }
+        }
+
+        private SpeechRecognitionEngine setLaguage(string perferredCulture)
+        {
+            foreach(RecognizerInfo config in SpeechRecognitionEngine.InstalledRecognizers())
+            {
+                if(config.Culture.ToString()==perferredCulture)
+                {
+                    speechRecognitionEngine = new SpeechRecognitionEngine(config);
+                    break;
+                }
+            }
+            if(speechRecognitionEngine==null)
+            {
+                MessageBox.Show("Desired culture is not installed on this machine !");
+                speechRecognitionEngine = new SpeechRecognitionEngine(SpeechRecognitionEngine.InstalledRecognizers()[0]);
+            }
+            return speechRecognitionEngine;
+        }

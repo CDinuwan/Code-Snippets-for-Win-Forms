@@ -1,0 +1,6 @@
+private static string ReverseString(string message)
+        {
+            char[] Arr = message.ToCharArray();
+            Array.Reverse(Arr);
+            return String.Concat(Arr);
+        }

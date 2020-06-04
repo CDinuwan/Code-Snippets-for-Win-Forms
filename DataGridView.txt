@@ -1,0 +1,15 @@
+
+        public void LoadRecord()
+        {
+            int i = 0;
+            dataGridView1.Rows.Clear();
+            cn.Open();
+            cm = new SqlCommand("select * from student",cn);
+            dr = cm.ExecuteReader();
+            while(dr.Read())
+            {
+                i += 1;
+                dataGridView1.Rows.Add(i,dr["regno"].ToString(),dr["surname"].ToString(),dr["name"].ToString(),dr["phoneno"].ToString(),dr["birthday"].ToString(),dr["extra"].ToString(),dr["specialab"].ToString());
+            }
+            cn.Close();
+        }

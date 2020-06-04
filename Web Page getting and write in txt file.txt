@@ -1,0 +1,5 @@
+WebClient client = new WebClient();
+            string reply = client.DownloadString("http://www.google.com");
+
+            Console.WriteLine(reply);
+            File.WriteAllText(@"D:\writeText.txt", reply);

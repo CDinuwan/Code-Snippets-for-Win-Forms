@@ -1,0 +1,19 @@
+string stri = String.Format("{1} = {0}", "First", "Second");
+string stri = string.Format("{0:C}", 123.45);//Currency
+string stri = String.Format("{0:N}",12341546463413544);//Formating Long Number
+string stri = String.Format("{0:P}", 0.12);//Present
+string stri = String.Format("{0:(###) ###-####}", 0767115744);//Phone Number
+
+stri = stri.Substring(6,10);//Substring
+stri = stri.ToUpper();//Upper Case
+stri = stri.Replace("t", "V");//Replace
+stri = stri.Remove(2, 4);//Removing Character
+
+StringBuilder myString = new StringBuilder();
+            for (int i = 0; i < 100; i++)
+            {
+                myString.Append("--");
+                myString.Append(i);
+            }
+
+            Console.WriteLine(myString);

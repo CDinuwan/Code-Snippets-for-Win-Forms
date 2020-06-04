@@ -1,0 +1,10 @@
+public int GetTotalBooks()
+        {
+            cn = new SqlConnection();
+            cn.ConnectionString = con;
+            cn.Open();
+            cm = new SqlCommand("select isnull(sum(noofcopies),0) as noofcopies from tblBook",cn);
+            getTotalBook = Int32.Parse(cm.ExecuteScalar().ToString());
+            cn.Close();
+            return getTotalBook;
+        }

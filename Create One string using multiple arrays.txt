@@ -1,0 +1,1 @@
+String.Concat(arr_name);

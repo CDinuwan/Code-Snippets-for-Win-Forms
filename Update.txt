@@ -1,0 +1,45 @@
+private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (MessageBox.Show("Are you sure you want to update this record?", "Save", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    cn.Open();
+                    cm = new SqlCommand("update tblBook set booktitle=@booktitle,publicationyear=@publicationyear,language=@language,category=@category,noofcopies=@noofcopies,currentcopies=@currentcopies where isbn like'"+txtISBN.Text+"'", cn);
+                    cm.Parameters.AddWithValue("@booktitle", txtBookTitle.Text);
+                    cm.Parameters.AddWithValue("@publicationyear", txtPublicationYear.Text);
+                    cm.Parameters.AddWithValue("@language", txtLanguage.Text);
+                    cm.Parameters.AddWithValue("@category", txtCategory.Text);
+                    cm.Parameters.AddWithValue("@noofcopies", txtNoOfCopies.Text);
+                    cm.Parameters.AddWithValue("@currentcopies", txtCurrentCopies.Text);
+                    cm.ExecuteNonQuery();
+                    cn.Close();
+                    MessageBox.Show("The record has been updated");
+                    Clear();
+                    frm.LoadRecord();
+                    this.Dispose();
+                }
+            }
+            catch (Exception er)
+            {
+                MessageBox.Show(er.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+    }
+
+string colName = dataGridView1.Columns[e.ColumnIndex].Name;
+            if(colName=="Edit")
+            {
+                frmBookAdd frm = new frmBookAdd(this);
+                frm.btnCancel.Enabled = false;
+                frm.btnUpdate.Enabled = true;
+                frm.txtISBN.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+                frm.txtBookTitle.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
+                frm.txtPublicationYear.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+                frm.txtLanguage.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                frm.txtCategory.Text = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
+                frm.txtNoOfCopies.Text = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
+                frm.txtCurrentCopies.Text = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
+                frm.ShowDialog();
+
+            }

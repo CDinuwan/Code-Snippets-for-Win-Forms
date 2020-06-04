@@ -1,0 +1,4 @@
+Console.Clear();
+
+Random rand=new Random();//Random number
+int randomNumber=rand.Next(1,11);

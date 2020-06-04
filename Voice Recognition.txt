@@ -1,0 +1,30 @@
+using System.Speech.Recognition;
+using System.Speech.Synthesis;
+
+SpeechRecognitionEngine speechRecognitionEngine = null;
+SpeechSynthesizer Marvel = new SpeechSynthesizer();
+
+public Form1()
+        {
+            InitializeComponent();
+            speechRecognitionEngine = setLaguage("en-US");
+	    speechRecognitionEngine.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Mainevent_SpeechRecognized); 
+        }
+
+private SpeechRecognitionEngine setLaguage(string perferredCulture)
+        {
+            foreach(RecognizerInfo config in SpeechRecognitionEngine.InstalledRecognizers())
+            {
+                if(config.Culture.ToString()==perferredCulture)
+                {
+                    speechRecognitionEngine = new SpeechRecognitionEngine(config);
+                    break;
+                }
+            }
+            if(speechRecognitionEngine==null)
+            {
+                MessageBox.Show("Desired culture is not installed on this machine !");
+                speechRecognitionEngine = new SpeechRecognitionEngine(SpeechRecognitionEngine.InstalledRecognizers()[0]);
+            }
+            return speechRecognitionEngine;
+        }

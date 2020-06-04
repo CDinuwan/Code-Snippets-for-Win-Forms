@@ -1,0 +1,8 @@
+class DBConnection
+    {
+        public string MyCon()
+        {
+            string con = "";
+            return con;
+        }
+    }
