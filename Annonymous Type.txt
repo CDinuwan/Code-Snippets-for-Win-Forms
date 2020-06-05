@@ -1,0 +1,3 @@
+var newCars=from car in myList
+	where car.Make=="Oldmodel"
+	select new {car.Make,car.Vin};

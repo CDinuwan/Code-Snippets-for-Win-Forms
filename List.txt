@@ -1,0 +1,11 @@
+ArrayList myArrayList = new ArrayList();
+            myArrayList.Add(myCar);
+            myArrayList.Add(b1);
+            myArrayList.Remove(b1);
+
+List<Car> myList = new List<Car>();
+            myList.Add(myCar);
+            foreach (Car mycar in myList)
+            {
+                Console.WriteLine(myCar.Model);
+            }

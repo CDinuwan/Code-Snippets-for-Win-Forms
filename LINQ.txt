@@ -1,0 +1,33 @@
+List<Car> myList = new List<Car>()
+            {
+                new Car{Make="oldModel",Model="Honda",Vin="Es"},
+                new Car{Make="Nissan",Model="Saloon",Vin="Ess"}
+            };
+
+            var Nissan = from car in myList
+                         where car.Make == "Nissan"
+                         && car.Vin== "Ess"
+                         select car;
+
+            foreach (var car in Nissan)
+            {
+                Console.WriteLine("{0} {1}",car.Make, car.Model, car.Vin);
+            }
+
+
+//Above do it in one line
+var oldmodel = myList.Where(p => p.Make == "oldModel");
+
+var orderedCars=from car in myList
+	orderby car.Year descending 
+	select car;
+
+var orderedCar=myList.OrderByDescending(p=>p.Year);
+
+var FirstCar = myList.First(p => p.Make == "oldModel");
+            Console.WriteLine(FirstCar.Vin);
+
+.TrueforAll()
+.Foreach()
+.Exists()
+.Sum()

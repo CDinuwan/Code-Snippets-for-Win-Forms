@@ -1,0 +1,13 @@
+Car car1 = new Car()
+            {
+                Make = "BMW",
+                Model = "Honda",
+                Vin = "C3"
+            };
+
+
+List<Car> myList = new List<Car>()
+            {
+                new Car{Make="oldModel",Model="Honda",Vin="Es"},
+                new Car{Make="Nissan",Model="Saloon",Vin="Ess"}
+            };

@@ -1,0 +1,8 @@
+Car myCar = new Car();
+            myCar.Vin = "AI";
+            myCar.Make = "Honda";
+
+            Dictionary<string,Car>myDictionary=new Dictionary<string, Car>();
+            myDictionary.Add(myCar.Vin, myCar);
+
+            Console.WriteLine(myDictionary["AI"].Make);
