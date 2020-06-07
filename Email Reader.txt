@@ -1,0 +1,50 @@
+private void AllEmails()
+        {
+            try
+            {
+                WebClient objClient = new WebClient();
+                string response;
+                string title;
+                string summary;
+                string tagline;
+
+                XmlDocument doc = new XmlDocument();
+                //objClient.Credentials = new System.Net.NetworkCredential(userName.Text,password.Text);
+                response = Encoding.UTF8.GetString(
+                    objClient.DownloadData(@"https://mail.google.com/mail/feed/atom")
+                    );
+                response = response.Replace(
+                    @"<feed version=""0.3"" xmlns=""http:purl.org/atom/ns#"">", @"<feed>"
+                    );
+                doc.LoadXml(response);
+                //Counting all emails.
+                string total_mail = doc.SelectSingleNode(@"/feed/entry").InnerText;
+                lblTotalEmails.Text = total_mail;
+
+                jarwis.SpeakAsync("Total numbers of emails are, "+total_mail+"email is exist in gmail inbox");
+                tagline = doc.SelectSingleNode("/feed/tagline").InnerText;
+                txtemailTagline.Text = tagline;
+                jarwis.SpeakAsync("sir, you have "+tagline);
+
+                foreach(XmlNode node in doc.SelectNodes(@"/feed/entry"))
+                {
+                    //Reading the email author from atom feed
+                    txtemailAuthor.Text = node.SelectSingleNode("author").SelectSingleNode("name").InnerText;
+                    jarwis.SpeakAsync("email from, " + txtemailAuthor.Text.ToString());
+                    //Reading a title of email
+                    title = node.SelectSingleNode("title").InnerText;
+                    txtMessageTitle.Text = title;
+                    jarwis.SpeakAsync("sir, mail is about, " + title.ToString());
+                    summary = node.SelectSingleNode("summary").InnerText;
+                    txtMessageSummary.Text = summary.ToString();
+                    jarwis.SpeakAsync("and the summary is, " + summary.ToString());
+                }
+
+            }
+            catch(Exception er)
+            {
+                jarwis.SpeakAsync("Please login to your account and turn on less secure apps before getting work");
+                MessageBox.Show("Please login to your account and turn on less secure apps before getting work");
+                System.Diagnostics.Process.Start("https://support.google.com/accounts/answer/6010255?hl=en");
+            }
+        }

@@ -1,0 +1,9 @@
+enum Status
+    {
+        NotStarted,
+        InProgress,
+        OnHold,
+        Completed,
+        Deleted
+
+    } 

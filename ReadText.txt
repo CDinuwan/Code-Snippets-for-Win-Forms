@@ -1,0 +1,2 @@
+string content = File.ReadAllText(@"D:\writeText.txt");
+            Console.WriteLine(content);

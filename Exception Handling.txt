@@ -1,0 +1,18 @@
+try
+            {
+                string content = File.ReadAllText(@"D:\writeText.txt");
+                Console.WriteLine(content);
+            }
+catch(Exception er)
+            {
+                Console.WriteLine(er.Message);
+            }
+finally
+            {
+                Console.WriteLine("Closing the Application");
+            }
+
+FileNotFoundException
+DirectoryNotFoundException
+
+When you hower your mouse you can see Exception in that Method.
