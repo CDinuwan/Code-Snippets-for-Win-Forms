@@ -1,0 +1,3 @@
+/// <summary>
+/// Represents the matchup that this team came from as the winner.
+/// </summary>
