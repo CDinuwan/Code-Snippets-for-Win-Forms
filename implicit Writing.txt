@@ -1,0 +1,21 @@
+class Program
+    {
+        static void Main(string[] args)
+        {
+            var firstName = "jhon";
+            string lastNmae;
+
+            var age = 15;
+            int oldAge;
+        }
+    }
+
+//intialized variablr only can use for implicit writing
+//Cannot convert
+
+for (var i = 0; i < 5; i++)
+{
+       Console.WriteLine(i);
+}
+
+var stringBuilder = new StringBuilder();

@@ -1,0 +1,29 @@
+using FireSharp.Config;
+using FireSharp.Response;
+using FireSharp.Interfaces;
+
+IFirebaseConfig config = new FirebaseConfig
+        {
+            AuthSecret= "RexrG6OuogoAu6dghwvsZtLkCi3z5ig2NfaRtnsK",
+            BasePath= "https://blood-donor-9af63-default-rtdb.firebaseio.com/"
+        };
+
+try
+            {
+                client = new FireSharp.FirebaseClient(config);
+
+                if (client != null)
+                {
+                    MessageBox.Show("Connection Established");
+                }
+                else
+                {
+                    MessageBox.Show("Check your connection again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Application.Exit();
+                }
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Check your connection again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Application.Exit();
+            }

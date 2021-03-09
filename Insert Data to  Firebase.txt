@@ -1,0 +1,24 @@
+if(MessageBox.Show("Are you sure you want to add this record?","Insert",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            {
+                var data = new Data
+                {
+                    ID = txtID.Text,
+                    Name = txtName.Text,
+                    Address = txtRAddress.Text,
+                    ContactNum = Convert.ToInt32(txtContactNumber.Text),
+                    Age = txtAge.Text,
+                    Description = txtDescription.Text,
+                    Gender = cboSex.Text,
+                    BloodGroup = cboBoodGroup.Text
+                };
+
+                try
+                {
+                    SetResponse response = await client.SetTaskAsync("Donor/" + txtID.Text, data);
+                    Data result = response.ResultAs<Data>();
+                    MessageBox.Show("Your record has been successfully added!");
+                }catch(Exception)
+                {
+                    MessageBox.Show("Please check your data again!");
+                }
+            }
