@@ -1,0 +1,30 @@
+ try
+            {
+                FirebaseResponse response = await client.GetTaskAsync("Donor/" + textBox1.Text);
+                if (response != null)
+                {
+                    Data obj = response.ResultAs<Data>();
+                    txtID.Text = obj.ID;
+                    txtName.Text = obj.Name;
+                    txtRAddress.Text = obj.Address;
+                    txtDescription.Text = obj.Description;
+                    txtContactNumber.Text = (obj.ContactNum).ToString();
+                    txtAge.Text = obj.Age;
+                    cboBoodGroup.Text = obj.BloodGroup;
+                    cboSex.Text = obj.Gender;
+
+                    MessageBox.Show("Your result is ready");
+                }
+                else
+                {
+                    MessageBox.Show("Please check your id number again");
+                }
+
+
+
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Error");
+            }
+        }
